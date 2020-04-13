@@ -1,0 +1,16 @@
+.Error {
+  color: #383838;
+  text-align: center;
+}
+
+.Error.darkmode {
+  color: #b1b1b1;
+}
+
+.Error__heading {
+  font-size: 3rem;
+}
+
+.Error__subheading {
+  font-size: 1rem;
+}

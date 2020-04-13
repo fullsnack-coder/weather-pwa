@@ -1,0 +1,25 @@
+.Header {
+  position: absolute;
+  top: 0;
+  padding: 1rem 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.Header.darkmode .Header__button {
+  color: #fff;
+}
+
+.Header__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: transform ease-out 0.2s;
+  outline: none;
+}
+
+.theme-controller:active {
+  transform: rotate(360deg);
+}
