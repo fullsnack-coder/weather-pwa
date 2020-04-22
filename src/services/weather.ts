@@ -1,4 +1,5 @@
 import axios from "axios";
+import keys from "../utils/config";
 
 const weatherInstance = axios.create({
   baseURL: "https://api.openweathermap.org/data/2.5",
@@ -7,7 +8,7 @@ const weatherInstance = axios.create({
 weatherInstance.interceptors.request.use((config) => {
   config.params = {
     ...config.params,
-    appid: "YOUR_API_KEY",
+    appid: keys.apiKeys.weatherApi,
   };
   return config;
 });

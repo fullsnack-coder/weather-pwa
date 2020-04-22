@@ -1,10 +1,11 @@
 import axios, { AxiosInstance } from "axios";
+import keys from "../utils/config";
 
 const geoLocationInstance: AxiosInstance = axios.create({
   baseURL: `https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php`,
   responseType: "json",
   headers: {
-    "x-rapidapi-key": "YOUR_API_KEY",
+    "x-rapidapi-key": keys.apiKeys.rapidApiKey,
   },
 });
 
