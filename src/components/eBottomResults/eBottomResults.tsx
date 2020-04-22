@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import classnames from "classnames";
-import "./eBottomResults.css";
 import { appContext } from "../../context/app";
 import {
   FaThermometerEmpty,
   FaThermometerFull,
   FaCalendarCheck,
 } from "react-icons/fa";
-import { getCelcius, parseDate } from "../../utils";
+import { getCelcius } from "../../utils";
+import "./eBottomResults.css";
 import * as Weather from "../../services/weather";
 import Loader from "../Loader";
 
@@ -70,7 +70,6 @@ const EBottomResults: React.FC<Props> = ({ active }) => {
                 key={dt}
                 className={darkMode ? "forecastItem darkmode" : "forecastItem"}
               >
-                {console.log(new Date(dt_txt).getDate())}
                 <h2>{}</h2>
                 <div className="details__body">
                   <div className="details__item">
