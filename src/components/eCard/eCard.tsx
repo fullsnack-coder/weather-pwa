@@ -1,8 +1,9 @@
-import React from "react";
-import "./eCard.css";
-import { FaThermometerEmpty, FaThermometerFull } from "react-icons/fa";
-import { parseDate, getCelcius } from "../../utils";
-import classnames from "classnames";
+import React from 'react';
+import './eCard.css';
+import { FaThermometerEmpty, FaThermometerFull } from 'react-icons/fa';
+import { parseDate, getCelcius } from '../../utils';
+import classnames from 'classnames';
+import { motion } from 'framer-motion';
 
 type Props = {
   temperature: number;
@@ -24,20 +25,24 @@ const ECard: React.FC<Props> = ({
   const date = Intl.DateTimeFormat().format(Date.now());
   const stringDate = parseDate(date);
 
-  const classes = classnames("ECard", {
+  const classes = classnames('ECard', {
     darkmode,
   });
 
   return (
-    <div className={classes}>
+    <motion.div
+      className={classes}
+      initial={{ opacity: 0, y: 100, scale: 0.8 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+    >
       <h1 className="ECard__heading">{place?.toUpperCase()}</h1>
       <figure
         className={
-          darkmode ? "ECard__weather-icon darkmode" : "ECard__weather-icon"
+          darkmode ? 'ECard__weather-icon darkmode' : 'ECard__weather-icon'
         }
       >
         <img
-          src={`http://openweathermap.org/img/wn/${icon ? icon : "10d@2x"}.png`}
+          src={`http://openweathermap.org/img/wn/${icon || '10d@2x'}.png`}
           alt="weather-icon"
         />
       </figure>
@@ -58,7 +63,7 @@ const ECard: React.FC<Props> = ({
           {getCelcius(tempMax)}°C
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
