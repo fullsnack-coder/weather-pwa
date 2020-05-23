@@ -1,15 +1,12 @@
-import React, { useContext, useState } from "react";
-import classnames from "classnames";
-import { appContext } from "../../context/app";
-import {
-  FaThermometerEmpty,
-  FaThermometerFull,
-  FaCalendarCheck,
-} from "react-icons/fa";
-import { getCelcius } from "../../utils";
-import "./eBottomResults.css";
-import * as Weather from "../../services/weather";
-import Loader from "../Loader";
+import React, { useContext, useState } from 'react';
+import classnames from 'classnames';
+import { FaCalendarCheck } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { appContext } from '../../context/app';
+import './eBottomResults.css';
+import * as Weather from '../../services/weather';
+import Loader from '../Loader';
+import ForeCastItem from './_childrens/foreCastItem';
 
 type Props = {
   active?: boolean;
@@ -27,14 +24,13 @@ type WeatherItem = {
   dt_txt: string;
 };
 
-const EBottomResults: React.FC<Props> = ({ active }) => {
+const EBottomResults: React.FC<Props> = () => {
   const { darkMode } = useContext(appContext);
   const [foreCast, setForecast] = useState<Array<WeatherItem>>([]);
   const [loading, setLoading] = useState(false);
 
-  let classes = classnames("EBottomResults", {
+  const classes = classnames('EBottomResults', {
     darkmode: darkMode,
-    active: active,
   });
 
   function getForeCast() {
@@ -46,53 +42,41 @@ const EBottomResults: React.FC<Props> = ({ active }) => {
   }
 
   return (
-    <div className={classes}>
+    <motion.div
+      className={classes}
+      initial={{ opacity: 0, y: '100%' }}
+      animate={{ opacity: 1, y: '0' }}
+    >
       <div className="container">
         {!loading && foreCast.length === 0 && (
           <button
             onClick={getForeCast}
             className={
               darkMode
-                ? "EBottom__btn-forecast darkmode"
-                : "EBottom__btn-forecast"
+                ? 'EBottom__btn-forecast darkmode'
+                : 'EBottom__btn-forecast'
             }
+            type="button"
           >
             <FaCalendarCheck />
-            <p>Próximos 5 días</p>
+            <p>Pronóstico disponible</p>
           </button>
         )}
         {loading ? (
           <Loader darkmode={darkMode} />
         ) : (
-          foreCast?.map(
-            ({ dt, weather, main: { temp_max, temp_min }, dt_txt }) => (
-              <div
-                key={dt}
-                className={darkMode ? "forecastItem darkmode" : "forecastItem"}
-              >
-                <h2>{}</h2>
-                <div className="details__body">
-                  <div className="details__item">
-                    <FaThermometerEmpty />
-                    <p>{getCelcius(Number(temp_min))}°C</p>
-                  </div>
-                  <figure className="foreItem__icon">
-                    <img
-                      src={`http://openweathermap.org/img/wn/${weather[0].icon}.png`}
-                      alt="foreCast-item-icon"
-                    />
-                  </figure>
-                  <div className="details__item">
-                    <FaThermometerFull />
-                    <p>{getCelcius(temp_max)}°C</p>
-                  </div>
-                </div>
-              </div>
-            )
-          )
+          foreCast?.map(({ dt, weather, main: { temp_max, temp_min } }) => (
+            <ForeCastItem
+              darkMode={!!darkMode}
+              temp_max={temp_max}
+              temp_min={temp_min}
+              weather={weather}
+              dt={dt}
+            />
+          ))
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

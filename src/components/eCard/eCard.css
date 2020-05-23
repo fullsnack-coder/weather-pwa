@@ -12,6 +12,7 @@
 .ECard__cover {
   width: 7.2rem;
   margin: 0 auto;
+  height: 100px;
 }
 
 .ECard__cover img {
