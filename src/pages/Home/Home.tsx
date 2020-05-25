@@ -62,7 +62,7 @@ const Home: React.FC = () => {
         <ESearch setWeather={setWeather} setLoading={() => {}} />
         <main className="Home__main">
           {status === 'loading' ? (
-            <Loader />
+            <Loader darkmode={darkMode} />
           ) : status === 'error' ? (
             <>
               <Error />

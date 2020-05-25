@@ -1,11 +1,11 @@
 .ECard {
   border-radius: 1rem;
-  box-shadow: 0.1rem 0.1rem 0.9em #e4e4e4;
+  box-shadow: 0.1rem 0.1rem 0.9em var(--bglightCard);
   padding: 2rem 3rem;
   width: 20rem;
   text-align: center;
   position: relative;
-  background-color: #f3f3f3;
+  background-color: var(--bgLightCard);
   transition: all ease-out 0.2s;
 }
 
@@ -20,9 +20,9 @@
 }
 
 .ECard.darkmode {
-  box-shadow: 0.1rem 0.1rem 0.9rem #1d1d1d;
-  background-color: #71828f;
-  color: #f5f5f5;
+  box-shadow: 0.1rem 0.1rem 0.9rem var(--darkShadow);
+  background-color: var(--bgDarkCard);
+  color: var(--lightText);
 }
 
 .ECard .ECard__heading {
@@ -38,8 +38,8 @@
 }
 
 .ECard__weather-icon {
-  background-color: #333333;
-  box-shadow: 0.1rem 0.1rem 0.9em #e2e2e2;
+  background-color: var(--darkShadow);
+  box-shadow: 0.1rem 0.1rem 0.9em var(--lightShadow);
   border-radius: 50%;
   top: 0.5rem;
   position: absolute;

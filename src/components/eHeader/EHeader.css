@@ -8,7 +8,7 @@
 }
 
 .Header.darkmode .Header__button {
-  color: #fff;
+  color: var(--lightText);
 }
 
 .Header__button {
