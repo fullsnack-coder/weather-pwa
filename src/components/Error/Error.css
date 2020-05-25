@@ -1,10 +1,10 @@
 .Error {
-  color: #383838;
+  color: var(--darkText);
   text-align: center;
 }
 
 .Error.darkmode {
-  color: #b1b1b1;
+  color: var(--lightText);
 }
 
 .Error__heading {
