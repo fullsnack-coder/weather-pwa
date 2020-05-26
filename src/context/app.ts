@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface AppContextInterface {
   darkMode?: boolean;
@@ -7,6 +7,8 @@ interface AppContextInterface {
     username: string;
   };
   toggleTheme?: any;
+  activeNavbar?: boolean;
+  toggleNavbar?: any;
 }
 
 export const appContext = React.createContext<AppContextInterface>({});

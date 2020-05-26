@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useQuery } from 'react-query';
+import classNames from 'classnames';
 
 import './Home.css';
 import * as Weather from '../../services/weather';
@@ -12,6 +13,7 @@ import Loader from '../../components/Loader';
 
 // eslint-disable-next-line no-unused-vars
 import { weatherResponse } from '../../utils/types/weather';
+import EHeader from '../../components/eHeader/eHeader';
 
 const Home: React.FC = () => {
   const [state, setState] = useState({
@@ -38,6 +40,7 @@ const Home: React.FC = () => {
         reject();
       }
     });
+
   function setWeather(properties: any) {
     setState((prevState) => ({ ...prevState, ...properties }));
   }
@@ -56,8 +59,13 @@ const Home: React.FC = () => {
   });
 
   const { darkMode } = useContext(appContext);
+  const classes = classNames('Home', {
+    darkmode: darkMode,
+  });
+
   return (
-    <div className={darkMode ? 'Home darkmode' : 'Home'}>
+    <div className={classes}>
+      <EHeader />
       <div className="wrapper">
         <ESearch setWeather={setWeather} setLoading={() => {}} />
         <main className="Home__main">

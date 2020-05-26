@@ -12,6 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 code {
@@ -59,6 +60,17 @@ button {
 }
 .mb50 {
   margin-bottom: 5rem;
+}
+.relative {
+  position: relative;
+}
+
+.App__container {
+  display: flex;
+}
+
+.App__container.darkMode {
+  background-color: var(--bgDarkApp);
 }
 
 :root {
