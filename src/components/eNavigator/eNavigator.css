@@ -1,0 +1,77 @@
+.Navigator {
+  background-color: var(--bgLightBottom);
+  min-height: 100vh;
+  top: 0;
+  transition: transform ease-out 0.2s;
+  width: 75.6%;
+  flex-shrink: 0;
+}
+
+.Navigator.darkMode {
+  background-color: var(--bgDarkBottom);
+  color: var(--lightText);
+}
+
+.Navigator__head {
+  background-color: var(--bgLightButton);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.3em 2rem;
+}
+
+.User__info {
+  align-self: flex-start;
+  color: var(--lightText);
+}
+
+.User__info p {
+  font-size: 0.75rem;
+}
+
+.User__info .class_icon {
+  font-size: 1rem;
+}
+
+.User__picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.User__picture img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.Navigator__body {
+  padding: 0.6rem;
+}
+
+.Nav__options {
+  border-bottom: solid 2px var(--lightShadow);
+}
+
+.Nav__option {
+  padding: 1.2rem;
+  font-size: 1rem;
+}
+
+.Nav__places {
+  padding: 1.3rem 0.6rem;
+}
+
+.Nav__places header {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* -- Nav-PlaceItem -- */
+
+.PlaceOption {
+  background-color: var(--bgLightButton);
+  border-radius: 8px;
+  padding: 0.8rem;
+  color: var(--lightText);
+}

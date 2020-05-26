@@ -6,16 +6,17 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -59,4 +60,30 @@ button {
 }
 .mb50 {
   margin-bottom: 5rem;
+}
+.relative {
+  position: relative;
+}
+
+.App__container {
+  display: flex;
+}
+
+.App__container.darkMode {
+  background-color: var(--bgDarkApp);
+}
+
+:root {
+  --bgLightApp: #ebebeb;
+  --bgLightCard: #f3f3f3;
+  --bgLightBottom: #fcfcfc;
+  --bgLightButton: #5a5f7e;
+  --bgDarkApp: #3b3b3b;
+  --bgDarkCard: #71828f;
+  --bgDarkBottom: #394146;
+  --bgDarkButton: #9099eb;
+  --darkShadow: #000000c2;
+  --lightShadow: #9e9e9e;
+  --darkText: #040404;
+  --lightText: #f5f5fc;
 }

@@ -1,11 +1,12 @@
-import axios from "axios";
-import keys from "../utils/config";
+import axios from 'axios';
+import keys from '../utils/config';
 
 const weatherInstance = axios.create({
-  baseURL: "https://api.openweathermap.org/data/2.5",
+  baseURL: 'https://api.openweathermap.org/data/2.5',
 });
 
 weatherInstance.interceptors.request.use((config) => {
+  // eslint-disable-next-line no-param-reassign
   config.params = {
     ...config.params,
     appid: keys.apiKeys.weatherApi,
@@ -14,24 +15,28 @@ weatherInstance.interceptors.request.use((config) => {
 });
 
 const getCurrentWeather = async (lat: number, lon: number) => {
-  const req = await weatherInstance.get("weather", {
-    params: {
-      lat,
-      lon,
-    },
-  });
-  return await req.data;
+  try {
+    const req = await weatherInstance.get('weather', {
+      params: {
+        lat,
+        lon,
+      },
+    });
+    return req.data;
+  } catch (error) {
+    throw new Error('Error');
+  }
 };
 
 const getForeCast = async (lat: number, lon: number, cnt?: number) => {
-  const req = await weatherInstance.get("forecast", {
+  const req = await weatherInstance.get('forecast', {
     params: {
       lat,
       lon,
       cnt,
     },
   });
-  return await req.data;
+  return req.data;
 };
 
 export { getCurrentWeather, getForeCast };
