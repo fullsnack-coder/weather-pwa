@@ -1,8 +1,10 @@
 .Home {
   background-color: #e0e0e0;
-  transition: background-color ease-out 0.2s;
+  transition: background-color, transform ease-out 0.2s;
   position: relative;
   overflow: hidden;
+  min-width: 100%;
+  flex-shrink: 0;
 }
 
 .Home.darkmode {
