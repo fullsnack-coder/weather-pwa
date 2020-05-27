@@ -7,6 +7,7 @@ import './eBottomResults.css';
 import * as Weather from '../../services/weather';
 import Loader from '../Loader';
 import ForeCastItem from './_childrens/foreCastItem';
+import EButton from '../eButton/eButton';
 
 type Props = {
   active?: boolean;
@@ -49,18 +50,11 @@ const EBottomResults: React.FC<Props> = () => {
     >
       <div className="container">
         {!loading && foreCast.length === 0 && (
-          <button
-            onClick={getForeCast}
-            className={
-              darkMode
-                ? 'EBottom__btn-forecast darkmode'
-                : 'EBottom__btn-forecast'
-            }
-            type="button"
-          >
-            <FaCalendarCheck />
-            <p>Pronóstico disponible</p>
-          </button>
+          <EButton
+            handleClick={getForeCast}
+            Icon={<FaCalendarCheck />}
+            text="Pronóstico Disponible"
+          />
         )}
         {loading ? (
           <Loader darkmode={darkMode} />

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
+
 import './eNavigator.css';
 import { appContext } from '../../context/app';
 import PlaceOption from './_children/PlaceOption';
 
 const ENavigator: React.FC = () => {
-  const { darkMode } = useContext(appContext);
+  const { darkMode, toggleNavbar } = useContext(appContext);
   const classes = classNames('Navigator', {
     darkMode: !!darkMode,
   });
@@ -30,10 +32,13 @@ const ENavigator: React.FC = () => {
         </span>
       </div>
       <div className="Navigator__body">
-        <nav className="Nav__options">
-          <div className="Nav__option">
-            <p>Ir al perfil</p>
-          </div>
+        <nav className={darkMode ? 'Nav__options darkmode' : 'Nav__options'}>
+          <NavLink to="/" className="Nav__option" onClick={toggleNavbar} exact>
+            Home
+          </NavLink>
+          <NavLink to="/profile" className="Nav__option" onClick={toggleNavbar}>
+            Ir al perfil
+          </NavLink>
         </nav>
         <section className="Nav__places">
           <header className="mb10">Lugares Visitados</header>

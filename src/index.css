@@ -64,6 +64,9 @@ button {
 .relative {
   position: relative;
 }
+.icon {
+  font-size: 1.1rem;
+}
 
 .App__container {
   display: flex;

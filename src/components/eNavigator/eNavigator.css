@@ -53,9 +53,24 @@
   border-bottom: solid 2px var(--lightShadow);
 }
 
+.Nav__options .Nav__option {
+  color: var(--darkText);
+}
+
+.Nav__options.darkmode .Nav__option {
+  color: var(--lightText);
+}
+
 .Nav__option {
   padding: 1.2rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  display: block;
+  font-weight: 700;
+  border-bottom: solid 1px var(--lightShadow);
+}
+
+.Nav__options .Nav__option.active {
+  color: var(--bgDarkButton);
 }
 
 .Nav__places {

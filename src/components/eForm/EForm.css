@@ -1,0 +1,14 @@
+.Form {
+  width: 95%;
+}
+
+.Form .container {
+  background-color: var(--bgLightCard);
+  border-radius: 12px;
+  min-height: 10rem;
+  padding: 1rem;
+}
+
+.Form.darkMode .container {
+  background-color: var(--bgDarkCard);
+}
