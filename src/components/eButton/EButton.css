@@ -1,0 +1,26 @@
+.Button {
+  background-color: var(--bgLightButton);
+  border: solid 1px black;
+  box-shadow: 5px 3px 0 0.4px var(--bgDarkButton);
+  color: var(--lightText);
+  font-weight: 700;
+  margin: 0 auto;
+  padding: 0.4rem 1.2rem;
+  text-transform: uppercase;
+}
+
+.Button.darkMode {
+  background-color: var(--bgDarkButton);
+  box-shadow: 5px 3px 0 0.4px var(--bgLightButton);
+  color: var(--darkText);
+}
+
+.Button:active {
+  box-shadow: 5px 4px 0 0.5px initial;
+  padding: 0.5rem 1.3rem;
+}
+
+.Button p {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
