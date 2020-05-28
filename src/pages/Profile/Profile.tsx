@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import { FaPenAlt } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 import './Profile.css';
 import EHeader from '../../components/eHeader/eHeader';
 import EForm from '../../components/eForm/eForm';
 import { appContext } from '../../context/app';
 
-export default function Profile() {
+const Profile: React.FC = () => {
   const { darkMode } = useContext(appContext);
+
   return (
-    <div className={darkMode ? 'Profile darkMode' : 'Profile'}>
+    <motion.div
+      className={darkMode ? 'Profile darkMode' : 'Profile'}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <EHeader />
       <div className="wrapper">
         <div className="relative mb10">
@@ -25,6 +31,8 @@ export default function Profile() {
         </div>
         <EForm title="Mi información" />
       </div>
-    </div>
+    </motion.div>
   );
-}
+};
+
+export default Profile;

@@ -1,44 +1,53 @@
-import React, { useRef, useEffect, SyntheticEvent, useContext } from "react";
-import { FaSearch } from "react-icons/fa";
-import classnames from "classnames";
-import "./eSearch.css";
-import { appContext } from "../../context/app";
-import * as GEO from "../../services/geolocalization";
-import * as Weather from "../../services/weather";
+import React, { useRef, useEffect, SyntheticEvent, useContext } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import classnames from 'classnames';
+import './eSearch.css';
+import { appContext } from '../../context/app';
+import * as GEO from '../../services/geolocalization';
+import * as Weather from '../../services/weather';
+import { getCelcius } from '../../utils';
 
 type Props = {
   setWeather: (a: any) => void;
   setLoading: (a: boolean) => void;
+  setGrant: (a: any) => void;
 };
 
-const ESearch: React.FC<Props> = ({ setWeather, setLoading }) => {
+const ESearch: React.FC<Props> = ({ setWeather, setLoading, setGrant }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { darkMode: darkmode } = useContext(appContext);
+  const { darkMode: darkmode, setCoords } = useContext(appContext);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
   function handleSubmit(e: SyntheticEvent) {
-    setLoading(true);
     e.preventDefault();
-    if (inputRef.current?.value) {
-      GEO.getGeoLocation(inputRef.current?.value).then((res) => {
-        Weather.getCurrentWeather(res.latitude, res.longitude).then((res) => {
-          setWeather({
-            icon: res.weather[0].icon,
-            weather: res.main.temp,
-            place: res.name,
-            tempMin: res.main.temp_min,
-            tempMax: res.main.temp_max,
-          });
-          setLoading(false);
-        });
+    if (inputRef.current?.value && inputRef.current?.value.length > 3) {
+      setGrant(true);
+      setLoading(true);
+      GEO.getGeoLocation(inputRef.current?.value).then((coords) => {
+        Weather.getCurrentWeather(coords.latitude, coords.longitude).then(
+          (resWeather) => {
+            setWeather({
+              icon: resWeather.weather[0].icon,
+              weather: getCelcius(resWeather.main.temp),
+              place: resWeather.name,
+              tempMin: getCelcius(resWeather.main.temp_min),
+              tempMax: getCelcius(resWeather.main.temp_max),
+            });
+            setCoords({
+              lat: coords.latitude,
+              lng: coords.longitude,
+            });
+            setLoading(false);
+          },
+        );
       });
     }
   }
 
-  const classes = classnames("ESearch__form", {
+  const classes = classnames('ESearch__form', {
     darkmode,
   });
 
@@ -53,7 +62,7 @@ const ESearch: React.FC<Props> = ({ setWeather, setLoading }) => {
         />
         <button
           className={
-            darkmode ? "ESearch__form-button darkmode" : "ESearch__form-button"
+            darkmode ? 'ESearch__form-button darkmode' : 'ESearch__form-button'
           }
           type="submit"
         >
