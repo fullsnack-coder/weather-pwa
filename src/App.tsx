@@ -10,6 +10,7 @@ import Profile from './pages/Profile/Profile';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [activeNavbar, setActiveNavbar] = useState(false);
+  const [coords, setCoords] = useState({ lat: 0, lng: 0 });
 
   function toggleTheme() {
     setDarkMode(!darkMode);
@@ -26,6 +27,8 @@ function App() {
         toggleTheme,
         activeNavbar,
         toggleNavbar,
+        coords,
+        setCoords,
       }}
     >
       <Router>

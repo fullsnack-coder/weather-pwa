@@ -26,7 +26,7 @@ type WeatherItem = {
 };
 
 const EBottomResults: React.FC<Props> = () => {
-  const { darkMode } = useContext(appContext);
+  const { darkMode, coords } = useContext(appContext);
   const [foreCast, setForecast] = useState<Array<WeatherItem>>([]);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ const EBottomResults: React.FC<Props> = () => {
 
   function getForeCast() {
     setLoading(true);
-    Weather.getForeCast(-10.747899, -77.756641, 5).then((res) => {
+    Weather.getForeCast(coords.lat, coords.lng, 5).then((res) => {
       setForecast(res.list);
       setLoading(false);
     });
@@ -59,15 +59,18 @@ const EBottomResults: React.FC<Props> = () => {
         {loading ? (
           <Loader darkmode={darkMode} />
         ) : (
-          foreCast?.map(({ dt, weather, main: { temp_max, temp_min } }) => (
-            <ForeCastItem
-              darkMode={!!darkMode}
-              temp_max={temp_max}
-              temp_min={temp_min}
-              weather={weather}
-              dt={dt}
-            />
-          ))
+          foreCast?.map(
+            ({ dt, weather, main: { temp_max, temp_min } }, index) => (
+              <ForeCastItem
+                darkMode={!!darkMode}
+                temp_max={temp_max}
+                temp_min={temp_min}
+                weather={weather}
+                dt={dt}
+                key={index}
+              />
+            ),
+          )
         )}
       </div>
     </motion.div>

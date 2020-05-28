@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import { useFormik } from 'formik';
 
 import EButton from '../eButton/eButton';
 import './EForm.css';
 import Input from './_childrens/Input';
+import { appContext } from '../../context/app';
 
 type Props = {
   title: string;
@@ -45,9 +46,11 @@ const EForm: React.FC<Props> = ({ title }) => {
     validate,
   });
 
+  const { darkMode } = useContext(appContext);
+
   return (
     <motion.div
-      className="Form"
+      className={darkMode ? 'Form darkMode' : 'Form'}
       initial={{ opacity: 0, y: 100 }}
       animate={{
         y: 0,
