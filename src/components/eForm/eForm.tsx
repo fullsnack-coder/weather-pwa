@@ -6,9 +6,12 @@ import EButton from '../eButton/eButton';
 import './EForm.css';
 import Input from './_childrens/Input';
 import { appContext } from '../../context/app';
+import FormEdit from './_childrens/formEdit';
+import FormLogin from './_childrens/formLogin';
+import FormRegister from './_childrens/formRegister';
 
 type Props = {
-  title: string;
+  variant: 'edit' | 'login' | 'register';
 };
 
 type formValues = {
@@ -16,7 +19,7 @@ type formValues = {
   userlastname: string;
 };
 
-const EForm: React.FC<Props> = ({ title }) => {
+const EForm: React.FC<Props> = ({ children, variant }) => {
   function validate(values: formValues) {
     const errors: formValues = { username: '', userlastname: '' };
     if (values.username.length <= 0) {
@@ -48,6 +51,34 @@ const EForm: React.FC<Props> = ({ title }) => {
 
   const { darkMode } = useContext(appContext);
 
+  function getTitle() {
+    switch (variant) {
+      case 'edit':
+        return 'Mi información';
+      case 'login':
+        return 'Inicia sesión';
+      case 'register':
+        return 'Registrate!';
+      default:
+        return '';
+    }
+  }
+
+  function renderTemplate() {
+    switch (variant) {
+      case 'edit':
+        return <FormEdit />;
+      case 'login':
+        return <FormLogin />;
+      case 'register':
+        return <FormRegister />;
+      default:
+        return '';
+    }
+  }
+
+  const title = getTitle();
+
   return (
     <motion.div
       className={darkMode ? 'Form darkMode' : 'Form'}
@@ -58,29 +89,7 @@ const EForm: React.FC<Props> = ({ title }) => {
       }}
     >
       <h2 className="mb10">{title}</h2>
-      <form className="container" onSubmit={handleSubmit}>
-        <Input
-          placeholder="Ingrese su nombre"
-          label="Nombres"
-          type="text"
-          name="username"
-          value={values.username}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          invalid={errors.username !== '' && touched.username}
-        />
-        <Input
-          type="text"
-          placeholder="Ingrese sus apellidos"
-          label="Apellidos"
-          name="userlastname"
-          value={values.userlastname}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          invalid={errors.userlastname !== '' && touched.userlastname}
-        />
-        <EButton text="Guardar cambios" type="submit" />
-      </form>
+      <div className="container">{renderTemplate()}</div>
     </motion.div>
   );
 };

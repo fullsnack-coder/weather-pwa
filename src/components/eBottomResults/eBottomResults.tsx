@@ -54,6 +54,7 @@ const EBottomResults: React.FC<Props> = () => {
             handleClick={getForeCast}
             Icon={<FaCalendarCheck />}
             text="Pronóstico Disponible"
+            type="button"
           />
         )}
         {loading ? (

@@ -8,7 +8,8 @@ import EForm from '../../components/eForm/eForm';
 import { appContext } from '../../context/app';
 
 const Profile: React.FC = () => {
-  const { darkMode } = useContext(appContext);
+  const { darkMode, user } = useContext(appContext);
+  const username: string | undefined = user?.username;
 
   return (
     <motion.div
@@ -18,18 +19,20 @@ const Profile: React.FC = () => {
     >
       <EHeader />
       <div className="wrapper">
-        <div className="relative mb10">
-          <figure className="User__picture mb10">
-            <img
-              src="https://i.giphy.com/media/gFc4ioGkPc9DfSeBgr/giphy.webp"
-              alt="userimage"
-            />
-          </figure>
-          <div className="Profile__edit-pict">
-            <FaPenAlt className="icon" />
+        {username && (
+          <div className="relative mb10">
+            <figure className="User__picture mb10">
+              <img
+                src="https://i.giphy.com/media/gFc4ioGkPc9DfSeBgr/giphy.webp"
+                alt="userimage"
+              />
+            </figure>
+            <div className="Profile__edit-pict">
+              <FaPenAlt className="icon" />
+            </div>
           </div>
-        </div>
-        <EForm title="Mi información" />
+        )}
+        {username ? <EForm variant="edit" /> : <EForm variant="login" />}
       </div>
     </motion.div>
   );

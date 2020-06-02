@@ -38,6 +38,7 @@
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
+  background-color: var(--bgLightApp);
 }
 
 .User__picture img {

@@ -7,10 +7,21 @@ import { AppContextProvider } from './context/app';
 import ENavigator from './components/eNavigator/eNavigator';
 import Profile from './pages/Profile/Profile';
 
+type User = {
+  uuid?: string;
+  username: string;
+  userImage: string;
+};
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [activeNavbar, setActiveNavbar] = useState(false);
   const [coords, setCoords] = useState({ lat: 0, lng: 0 });
+
+  const [user, setUser] = useState<User>({
+    username: '',
+    userImage: '',
+  });
 
   function toggleTheme() {
     setDarkMode(!darkMode);
@@ -29,6 +40,8 @@ function App() {
         toggleNavbar,
         coords,
         setCoords,
+        user,
+        setUser,
       }}
     >
       <Router>
