@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import { AppContextProvider } from './context/app';
 import ENavigator from './components/eNavigator/eNavigator';
 import Profile from './pages/Profile/Profile';
+import { kick } from './services/userAccount';
 
 type User = {
   uuid?: string;
@@ -22,6 +23,10 @@ function App() {
     username: '',
     userImage: '',
   });
+
+  useEffect(() => {
+    kick();
+  }, []);
 
   function toggleTheme() {
     setDarkMode(!darkMode);

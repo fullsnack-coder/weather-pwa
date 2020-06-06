@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { useFormik } from 'formik';
 
-import EButton from '../eButton/eButton';
 import './EForm.css';
-import Input from './_childrens/Input';
 import { appContext } from '../../context/app';
 import FormEdit from './_childrens/formEdit';
 import FormLogin from './_childrens/formLogin';
@@ -12,43 +9,10 @@ import FormRegister from './_childrens/formRegister';
 
 type Props = {
   variant: 'edit' | 'login' | 'register';
+  setNewUser?: () => void;
 };
 
-type formValues = {
-  username: string;
-  userlastname: string;
-};
-
-const EForm: React.FC<Props> = ({ children, variant }) => {
-  function validate(values: formValues) {
-    const errors: formValues = { username: '', userlastname: '' };
-    if (values.username.length <= 0) {
-      errors.username = 'El campo de nombres es requerido';
-    }
-    if (values.userlastname.length <= 0) {
-      errors.userlastname = 'Se recomienda llenar el campo de apellidos';
-    }
-    return errors;
-  }
-
-  const {
-    errors,
-    handleSubmit,
-    handleBlur,
-    handleChange,
-    values,
-    touched,
-  } = useFormik({
-    onSubmit: (values) => {
-      alert('hello world');
-    },
-    initialValues: {
-      username: '',
-      userlastname: '',
-    },
-    validate,
-  });
-
+const EForm: React.FC<Props> = ({ variant, setNewUser }) => {
   const { darkMode } = useContext(appContext);
 
   function getTitle() {
@@ -69,9 +33,9 @@ const EForm: React.FC<Props> = ({ children, variant }) => {
       case 'edit':
         return <FormEdit />;
       case 'login':
-        return <FormLogin />;
+        return <FormLogin toRegister={setNewUser} />;
       case 'register':
-        return <FormRegister />;
+        return <FormRegister toLogin={setNewUser} />;
       default:
         return '';
     }

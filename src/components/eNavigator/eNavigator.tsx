@@ -1,19 +1,24 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 
 import './eNavigator.css';
 import { appContext } from '../../context/app';
 import PlaceOption from './_children/PlaceOption';
 import EButton from '../eButton/eButton';
-import { loginUser } from '../../services/login';
 
 const ENavigator: React.FC = () => {
   const { darkMode, toggleNavbar, user } = useContext(appContext);
   const classes = classNames('Navigator', {
     darkMode: !!darkMode,
   });
+  const history = useHistory();
+
+  function loginButtonHandler() {
+    toggleNavbar();
+    history.push('/profile');
+  }
 
   return (
     <div className={classes}>
@@ -39,7 +44,7 @@ const ENavigator: React.FC = () => {
                 text="Iniciar sesión"
                 type="button"
                 Icon={<AiFillHeart />}
-                handleClick={loginUser}
+                handleClick={loginButtonHandler}
               />
             </>
           )}

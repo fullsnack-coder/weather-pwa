@@ -29,3 +29,12 @@
   bottom: 4px;
   right: 10px;
 }
+
+#img-input {
+  opacity: 0;
+  z-index: -10;
+  transform: scale(0);
+  width: 0;
+  height: 0;
+  position: absolute;
+}
