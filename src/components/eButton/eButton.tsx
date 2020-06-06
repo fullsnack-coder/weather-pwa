@@ -5,11 +5,16 @@ import './EButton.css';
 type Props = {
   text: string;
   Icon?: any;
-  handleClick?: () => void;
-  type?: any;
+  handleClick?: any;
+  type: 'button' | 'submit';
 };
 
-const EButton: React.FC<Props> = ({ text, Icon, handleClick, type }) => {
+const EButton: React.FC<Props> = ({
+  text,
+  Icon,
+  handleClick,
+  type = 'button',
+}) => {
   const { darkMode } = useContext(appContext);
 
   return (
