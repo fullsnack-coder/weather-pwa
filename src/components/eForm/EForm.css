@@ -1,0 +1,44 @@
+.Form {
+  width: 95%;
+}
+
+.Form h2 {
+  padding: 0 1rem;
+}
+
+.Form .container {
+  background-color: var(--bgLightCard);
+  border-radius: 12px;
+  min-height: 10rem;
+  padding: 1rem;
+}
+
+.Form.darkMode h2 {
+  color: var(--lightText);
+}
+
+.Form.darkMode .container {
+  background-color: #c9c9c9;
+}
+
+.Form__register-box {
+  padding: 12px;
+  font-size: 0.7rem;
+}
+
+.Form__register-box span {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.Form__register-box h3 {
+  color: var(--bgLightButton);
+  font-weight: 700;
+}
+
+.Form__error {
+  color: #f17d7d;
+  text-align: end;
+  font-size: 0.7rem;
+  margin-bottom: 12px;
+}

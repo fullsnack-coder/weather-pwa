@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 import './Home.css';
 import * as Weather from '../../services/weather';
@@ -14,8 +14,14 @@ import Loader from '../../components/Loader';
 // eslint-disable-next-line no-unused-vars
 import { weatherResponse } from '../../utils/types/weather';
 import EHeader from '../../components/eHeader/eHeader';
+import { getCelcius } from '../../utils';
+import EButton from '../../components/eButton/eButton';
 
 const Home: React.FC = () => {
+  const { darkMode, setCoords } = useContext(appContext);
+  const [loading, setLoading] = useState(false);
+  const [grant, setGrant] = useState(false);
+  const [error] = useState({ ok: true });
   const [state, setState] = useState({
     weather: 0,
     icon: '10d@2x',
@@ -28,8 +34,14 @@ const Home: React.FC = () => {
     new Promise((resolve, reject) => {
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(({ coords }) => {
+          setLoading(true);
+          setGrant(true);
           Weather.getCurrentWeather(coords.latitude, coords.longitude)
             .then((weater) => {
+              setCoords({
+                lat: coords.latitude,
+                lng: coords.longitude,
+              });
               resolve(weater);
             })
             .catch((err) => {
@@ -45,33 +57,78 @@ const Home: React.FC = () => {
     setState((prevState) => ({ ...prevState, ...properties }));
   }
 
-  const { status } = useQuery('fetchedW ', getLocalWeather, {
-    refetchOnWindowFocus: false,
-    onSuccess: ({ name, main }) => {
+  const clickToSearch = () => {
+    getLocalWeather().then(({ name, main }) => {
       setState((prevState) => ({
         ...prevState,
-        weather: main.temp,
+        weather: getCelcius(main.temp),
         place: name,
-        tempMin: main.temp_min,
-        tempMax: main.temp_max,
+        tempMin: getCelcius(main.temp_min),
+        tempMax: getCelcius(main.temp_max),
       }));
-    },
-  });
+      setLoading(false);
+    });
+  };
 
-  const { darkMode } = useContext(appContext);
+  const autoSearch = () => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then(({ state: status }) => {
+        if (status === 'granted') {
+          setGrant(true);
+          setLoading(true);
+          getLocalWeather().then(({ name, main }) => {
+            setState((prevState) => ({
+              ...prevState,
+              weather: getCelcius(main.temp),
+              place: name,
+              tempMin: getCelcius(main.temp_min),
+              tempMax: getCelcius(main.temp_max),
+            }));
+            setLoading(false);
+          });
+        }
+      });
+  };
+
+  const autoSearchHydrated = useCallback(autoSearch, []);
+
+  useEffect(() => {
+    autoSearchHydrated();
+  }, [autoSearchHydrated]);
+
   const classes = classNames('Home', {
     darkmode: darkMode,
   });
 
   return (
-    <div className={classes}>
+    <motion.div
+      className={classes}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <EHeader />
       <div className="wrapper">
-        <ESearch setWeather={setWeather} setLoading={() => {}} />
+        <ESearch
+          setWeather={setWeather}
+          setLoading={setLoading}
+          setGrant={setGrant}
+        />
         <main className="Home__main">
-          {status === 'loading' ? (
+          {!grant ? (
+            <div>
+              <figure className="Home__cover mb20">
+                <img src="/assets/home_icon.svg" alt="home_icon" />
+              </figure>
+              <EButton
+                type="button"
+                text="Ver clima en mi ubicación"
+                handleClick={clickToSearch}
+              />
+            </div>
+          ) : loading ? (
             <Loader darkmode={darkMode} />
-          ) : status === 'error' ? (
+          ) : !error.ok ? (
             <>
               <Error />
               <figure className="Home__cover">
@@ -93,7 +150,7 @@ const Home: React.FC = () => {
           )}
         </main>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

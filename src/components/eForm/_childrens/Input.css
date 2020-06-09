@@ -1,0 +1,60 @@
+.Input {
+  border-radius: 8px;
+  background-color: var(--bgLightBottom);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.Input.invalid input {
+  border: solid 1px red;
+}
+
+.Input__label {
+  position: absolute;
+  font-size: 0.9rem;
+  top: 27%;
+  left: 1rem;
+  transition: transform ease-out 0.25s;
+  background-color: inherit;
+  padding: 0.2rem;
+}
+
+.Input input::placeholder {
+  opacity: 0;
+}
+
+.Input input.active ~ .Input__label {
+  left: 0.4rem;
+  top: -0.7rem;
+  transform: scale(0.7);
+  background-color: var(--bgLightCard);
+}
+
+.Input.darkMode input.active ~ label {
+  top: -1.2rem;
+  left: 0;
+  background-color: #c9c9c9;
+}
+
+.Input input {
+  padding: 13px;
+}
+
+.Input input:focus ~ .Input__label {
+  left: 0.4rem;
+  top: -0.7rem;
+  transform: scale(0.7);
+  background-color: var(--bgLightCard);
+}
+
+.Input.darkMode input:focus ~ .Input__label {
+  top: -1.2rem;
+  left: 0;
+  background-color: #c9c9c9;
+}
+
+.Input input:focus::placeholder {
+  opacity: 1;
+}

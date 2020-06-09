@@ -7,6 +7,7 @@ import './eBottomResults.css';
 import * as Weather from '../../services/weather';
 import Loader from '../Loader';
 import ForeCastItem from './_childrens/foreCastItem';
+import EButton from '../eButton/eButton';
 
 type Props = {
   active?: boolean;
@@ -25,7 +26,7 @@ type WeatherItem = {
 };
 
 const EBottomResults: React.FC<Props> = () => {
-  const { darkMode } = useContext(appContext);
+  const { darkMode, coords } = useContext(appContext);
   const [foreCast, setForecast] = useState<Array<WeatherItem>>([]);
   const [loading, setLoading] = useState(false);
 
@@ -35,7 +36,7 @@ const EBottomResults: React.FC<Props> = () => {
 
   function getForeCast() {
     setLoading(true);
-    Weather.getForeCast(-10.747899, -77.756641, 5).then((res) => {
+    Weather.getForeCast(coords.lat, coords.lng, 5).then((res) => {
       setForecast(res.list);
       setLoading(false);
     });
@@ -49,31 +50,28 @@ const EBottomResults: React.FC<Props> = () => {
     >
       <div className="container">
         {!loading && foreCast.length === 0 && (
-          <button
-            onClick={getForeCast}
-            className={
-              darkMode
-                ? 'EBottom__btn-forecast darkmode'
-                : 'EBottom__btn-forecast'
-            }
+          <EButton
+            handleClick={getForeCast}
+            Icon={<FaCalendarCheck />}
+            text="Pronóstico Disponible"
             type="button"
-          >
-            <FaCalendarCheck />
-            <p>Pronóstico disponible</p>
-          </button>
+          />
         )}
         {loading ? (
           <Loader darkmode={darkMode} />
         ) : (
-          foreCast?.map(({ dt, weather, main: { temp_max, temp_min } }) => (
-            <ForeCastItem
-              darkMode={!!darkMode}
-              temp_max={temp_max}
-              temp_min={temp_min}
-              weather={weather}
-              dt={dt}
-            />
-          ))
+          foreCast?.map(
+            ({ dt, weather, main: { temp_max, temp_min } }, index) => (
+              <ForeCastItem
+                darkMode={!!darkMode}
+                temp_max={temp_max}
+                temp_min={temp_min}
+                weather={weather}
+                dt={dt}
+                key={index}
+              />
+            ),
+          )
         )}
       </div>
     </motion.div>
