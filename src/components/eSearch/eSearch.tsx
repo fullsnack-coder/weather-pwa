@@ -7,13 +7,23 @@ import * as GEO from '../../services/geolocalization';
 import * as Weather from '../../services/weather';
 import { getCelcius } from '../../utils';
 
+type tError = {
+  ok: boolean;
+};
+
 type Props = {
   setWeather: (a: any) => void;
   setLoading: (a: boolean) => void;
+  setError: (a: tError) => void;
   setGrant: (a: any) => void;
 };
 
-const ESearch: React.FC<Props> = ({ setWeather, setLoading, setGrant }) => {
+const ESearch: React.FC<Props> = ({
+  setWeather,
+  setLoading,
+  setGrant,
+  setError,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { darkMode: darkmode, setCoords } = useContext(appContext);
 
@@ -26,24 +36,35 @@ const ESearch: React.FC<Props> = ({ setWeather, setLoading, setGrant }) => {
     if (inputRef.current?.value && inputRef.current?.value.length > 3) {
       setGrant(true);
       setLoading(true);
-      GEO.getGeoLocation(inputRef.current?.value).then((coords) => {
-        Weather.getCurrentWeather(coords.latitude, coords.longitude).then(
-          (resWeather) => {
-            setWeather({
-              icon: resWeather.weather[0].icon,
-              weather: getCelcius(resWeather.main.temp),
-              place: resWeather.name,
-              tempMin: getCelcius(resWeather.main.temp_min),
-              tempMax: getCelcius(resWeather.main.temp_max),
-            });
-            setCoords({
-              lat: coords.latitude,
-              lng: coords.longitude,
-            });
-            setLoading(false);
-          },
-        );
-      });
+      GEO.getGeoLocation(inputRef.current?.value)
+        .then((coords) => {
+          Weather.getCurrentWeather(coords.latitude, coords.longitude).then(
+            (resWeather) => {
+              if (!resWeather.error) {
+                setError({ ok: true });
+                setWeather({
+                  icon: resWeather.weather[0].icon,
+                  weather: getCelcius(resWeather.main.temp),
+                  place: resWeather.name,
+                  tempMin: getCelcius(resWeather.main.temp_min),
+                  tempMax: getCelcius(resWeather.main.temp_max),
+                });
+                setCoords({
+                  lat: coords.latitude,
+                  lng: coords.longitude,
+                });
+                setLoading(false);
+              } else if (resWeather.error) {
+                setError({ ok: false });
+                setLoading(false);
+              }
+            },
+          );
+        })
+        .catch((err) => {
+          setError({ ok: false });
+          setLoading(false);
+        });
     }
   }
 
