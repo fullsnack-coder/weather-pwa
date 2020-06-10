@@ -1,3 +1,4 @@
+// eslint-disable-next-line object-curly-newline
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
   const { darkMode, setCoords } = useContext(appContext);
   const [loading, setLoading] = useState(false);
   const [grant, setGrant] = useState(false);
-  const [error] = useState({ ok: true });
+  const [error, setError] = useState({ ok: true });
   const [state, setState] = useState({
     weather: 0,
     icon: '10d@2x',
@@ -112,6 +113,7 @@ const Home: React.FC = () => {
         <ESearch
           setWeather={setWeather}
           setLoading={setLoading}
+          setError={setError}
           setGrant={setGrant}
         />
         <main className="Home__main">

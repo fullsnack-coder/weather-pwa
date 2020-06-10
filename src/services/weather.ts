@@ -22,9 +22,9 @@ const getCurrentWeather = async (lat: number, lon: number) => {
         lon,
       },
     });
-    return req.data;
+    return { ...req.data, error: false };
   } catch (error) {
-    throw new Error('Error');
+    return { error: true };
   }
 };
 
