@@ -25,6 +25,14 @@
   color: var(--lightText);
 }
 
+.ECard__save-button {
+  position: absolute;
+  left: 1.5rem;
+  top: 14px;
+  font-size: 2rem;
+  color: var(--bgDarkApp);
+}
+
 .ECard .ECard__heading {
   font-size: 1.2rem;
 }
@@ -43,7 +51,7 @@
   border-radius: 50%;
   top: 0.5rem;
   position: absolute;
-  right: 3.5rem;
+  right: 1.5rem;
   width: 40px;
   height: 40px;
   transition: all ease-out 0.2s;
