@@ -12,16 +12,30 @@ type User = {
   uuid?: string;
   username: string;
   userImage: string;
+  userPlaces: { placeName: string; uuid: string }[];
 };
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [activeNavbar, setActiveNavbar] = useState(false);
   const [coords, setCoords] = useState({ lat: 0, lng: 0 });
+  const [appStatus, setAppStatus] = useState({
+    error: { ok: true },
+    loading: true,
+  });
+  const [weather, setWeather] = useState({
+    weather: 0,
+    icon: '10d@2x',
+    place: '',
+    tempMin: 0,
+    tempMax: 0,
+  });
 
   const [user, setUser] = useState<User>({
     username: '',
     userImage: '',
+    uuid: '',
+    userPlaces: [],
   });
 
   useEffect(() => {
@@ -47,6 +61,10 @@ function App() {
         setCoords,
         user,
         setUser,
+        weather,
+        setWeather,
+        appStatus,
+        setAppStatus,
       }}
     >
       <Router>
