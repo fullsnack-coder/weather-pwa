@@ -61,7 +61,17 @@ const ENavigator: React.FC = () => {
         </nav>
         <section className="Nav__places">
           <header className="mb10">Lugares Visitados</header>
-          <PlaceOption />
+          <main>
+            {user?.username !== '' ? (
+              <>
+                {user?.userPlaces.map((place) => (
+                  <PlaceOption name={place.placeName} key={place.placeName} />
+                ))}
+              </>
+            ) : (
+              <h3>No ha iniciado sesión</h3>
+            )}
+          </main>
         </section>
       </div>
     </div>

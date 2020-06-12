@@ -15,7 +15,6 @@ export const getGeoLocation = async (arg = '') => {
         key: keys.apiKeys.openCage,
       },
     });
-    console.log(req.data);
     if (req.status === 400) {
       return { status: false, message: 'Busqueda fallida' };
     }
