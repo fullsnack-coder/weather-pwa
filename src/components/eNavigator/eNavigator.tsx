@@ -64,9 +64,13 @@ const ENavigator: React.FC = () => {
           <main>
             {user?.username !== '' ? (
               <>
-                {user?.userPlaces.map((place) => (
-                  <PlaceOption name={place.placeName} key={place.placeName} />
-                ))}
+                {user?.userPlaces.length || [].length > 0 ? (
+                  user?.userPlaces.map((place) => (
+                    <PlaceOption name={place.placeName} key={place.placeName} />
+                  ))
+                ) : (
+                  <h3>No hay ubicaciones para mostrar</h3>
+                )}
               </>
             ) : (
               <h3>No ha iniciado sesión</h3>
