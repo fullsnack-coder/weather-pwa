@@ -47,10 +47,15 @@ const FormRegister: React.FC<Props> = ({ toLogin }) => {
       const req = await registerUser(values);
       const {
         ok,
-        user: { username, profileImage, places },
+        user: { username, profileImage, places, _id },
       } = req.data;
       if (ok) {
-        setUser({ username, userImage: profileImage, userPlaces: places });
+        setUser({
+          username,
+          userImage: profileImage,
+          userPlaces: places,
+          uuid: _id,
+        });
         history.push('/');
       }
     } catch (err) {
