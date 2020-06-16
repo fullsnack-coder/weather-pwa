@@ -36,6 +36,7 @@ const ENavigator: React.FC = () => {
                   ⚔️
                 </span>
               </p>
+              <p>{user.userDescription}</p>
             </>
           ) : (
             <>
