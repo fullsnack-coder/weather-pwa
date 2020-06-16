@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Input from './Input';
 import EButton from '../../eButton/eButton';
+import { editUser } from '../../../services/userAccount';
+import { appContext } from '../../../context/app';
 
 type formValues = {
-  username: string;
-  userlastname: string;
+  userDescription: string;
 };
 
 const FormEdit: React.FC = () => {
+  const { user, setUser } = useContext(appContext);
+  const history = useHistory();
+
   function validate(values: formValues) {
-    const errors: formValues = { username: '', userlastname: '' };
-    if (values.username.length <= 0) {
-      errors.username = 'El campo de nombres es requerido';
+    const errors: formValues = { userDescription: '' };
+    if (values.userDescription.length <= 0) {
+      errors.userDescription = 'El campo descripción es requerido';
     }
-    if (values.userlastname.length <= 0) {
-      errors.userlastname = 'Se recomienda llenar el campo de apellidos';
+    if (errors.userDescription === '') {
+      return {};
     }
     return errors;
   }
@@ -28,12 +34,32 @@ const FormEdit: React.FC = () => {
     values,
     touched,
   } = useFormik({
-    onSubmit: (values) => {
-      alert('hello world');
+    onSubmit: (formV) => {
+      editUser({
+        userDescription: formV.userDescription,
+        userId: `${user?.uuid}`,
+      }).then((resp) => {
+        if (resp.data.ok) {
+          setUser((prevUser: any) => ({
+            ...prevUser,
+            userDescription: resp.data.user.description,
+          }));
+          Swal.fire({
+            text: 'Se actualizó su información correctamente',
+            icon: 'success',
+          });
+          history.push('/');
+        } else if (!resp.data.ok) {
+          Swal.fire({
+            title: 'Oh oh',
+            text: 'Ocurrió un error al actualizar su información',
+            icon: 'error',
+          });
+        }
+      });
     },
     initialValues: {
-      username: '',
-      userlastname: '',
+      userDescription: '',
     },
     validate,
   });
@@ -41,23 +67,13 @@ const FormEdit: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <Input
         placeholder="Ingrese su nombre"
-        label="Nombres"
+        label="Descripción"
         type="text"
-        name="username"
-        value={values.username}
+        name="userDescription"
+        value={values.userDescription}
         handleBlur={handleBlur}
         handleChange={handleChange}
-        invalid={errors.username !== '' && touched.username}
-      />
-      <Input
-        type="text"
-        placeholder="Ingrese sus apellidos"
-        label="Apellidos"
-        name="userlastname"
-        value={values.userlastname}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        invalid={errors.userlastname !== '' && touched.userlastname}
+        invalid={errors.userDescription !== '' && touched.userDescription}
       />
       <EButton text="Guardar cambios" type="submit" />
     </form>

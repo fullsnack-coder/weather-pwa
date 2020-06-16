@@ -10,6 +10,7 @@ type User = {
   username: string;
   userImage: string;
   userPlaces: Place[];
+  userDescription: string;
 };
 
 type Weather = {

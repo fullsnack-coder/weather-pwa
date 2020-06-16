@@ -13,6 +13,7 @@ type User = {
   username: string;
   userImage: string;
   userPlaces: { placeName: string; uuid: string }[];
+  userDescription: string;
 };
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
     userImage: '',
     uuid: '',
     userPlaces: [],
+    userDescription: '',
   });
 
   useEffect(() => {

@@ -13,6 +13,11 @@ type RegisterInput = {
   password: string;
 };
 
+type EditInput = {
+  userId: string;
+  userDescription: string;
+};
+
 export const loginUser = async ({
   username,
   password,
@@ -33,6 +38,13 @@ export const registerUser = async ({
     username,
     email,
     password,
+  });
+  return req;
+};
+
+export const editUser = async ({ userDescription, userId }: EditInput) => {
+  const req = await axios.put(`${config.server.serverUri}/user/${userId}`, {
+    description: userDescription,
   });
   return req;
 };

@@ -40,7 +40,7 @@ export default function FormLogin({ toRegister }: Props) {
       const req = await loginUser(values);
       const {
         ok,
-        user: { username, profileImage, _id, places },
+        user: { username, profileImage, _id, places, description },
       } = req.data;
       if (ok) {
         setUser({
@@ -48,6 +48,7 @@ export default function FormLogin({ toRegister }: Props) {
           userImage: profileImage,
           uuid: _id,
           userPlaces: places,
+          userDescription: description,
         });
         history.push('/');
       }

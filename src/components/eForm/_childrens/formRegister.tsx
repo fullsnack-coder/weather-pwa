@@ -47,7 +47,7 @@ const FormRegister: React.FC<Props> = ({ toLogin }) => {
       const req = await registerUser(values);
       const {
         ok,
-        user: { username, profileImage, places, _id },
+        user: { username, profileImage, places, _id, description },
       } = req.data;
       if (ok) {
         setUser({
@@ -55,6 +55,7 @@ const FormRegister: React.FC<Props> = ({ toLogin }) => {
           userImage: profileImage,
           userPlaces: places,
           uuid: _id,
+          userDescription: description,
         });
         history.push('/');
       }
