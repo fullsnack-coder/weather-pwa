@@ -61,7 +61,7 @@ const ECard: React.FC<Props> = ({
         setIsFav(exist.length > 0);
       });
     }
-  }, []);
+  }, [user, place]);
 
   return (
     <motion.div

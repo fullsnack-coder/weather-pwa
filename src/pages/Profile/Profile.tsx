@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable operator-linebreak */
+// eslint-disable-next-line object-curly-newline
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { FaPenAlt } from 'react-icons/fa';
@@ -33,7 +36,7 @@ const Profile: React.FC = () => {
     if (user?.userImage !== '') {
       setImage(user?.userImage);
     }
-  }, []);
+  }, [user]);
 
   async function updateUserImage(e: any) {
     e.preventDefault();

@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import React, { SyntheticEvent, useContext, useState } from 'react';
+/* eslint-disable object-curly-newline */
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import EButton from '../../eButton/eButton';
