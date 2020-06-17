@@ -31,7 +31,7 @@ const ENavigator: React.FC = () => {
             <>
               <h1>{user?.username}</h1>
               <p>
-                {user?.uuid}
+                {`ID: ${user?.uuid}`}
                 <span role="img" aria-label="class" className="class_icon">
                   ⚔️
                 </span>
