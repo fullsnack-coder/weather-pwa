@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import React, { SyntheticEvent, useContext, useState } from 'react';
+/* eslint-disable object-curly-newline */
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import EButton from '../../eButton/eButton';
@@ -40,10 +40,16 @@ export default function FormLogin({ toRegister }: Props) {
       const req = await loginUser(values);
       const {
         ok,
-        user: { username, profileImage, _id },
+        user: { username, profileImage, _id, places, description },
       } = req.data;
       if (ok) {
-        setUser({ username, userImage: profileImage, uuid: _id });
+        setUser({
+          username,
+          userImage: profileImage,
+          uuid: _id,
+          userPlaces: places,
+          userDescription: description,
+        });
         history.push('/');
       }
     } catch (err) {

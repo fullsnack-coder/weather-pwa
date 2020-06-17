@@ -31,11 +31,12 @@ const ENavigator: React.FC = () => {
             <>
               <h1>{user?.username}</h1>
               <p>
-                {user?.uuid}
+                {`ID: ${user?.uuid}`}
                 <span role="img" aria-label="class" className="class_icon">
                   ⚔️
                 </span>
               </p>
+              <p>{user.userDescription}</p>
             </>
           ) : (
             <>
@@ -61,7 +62,21 @@ const ENavigator: React.FC = () => {
         </nav>
         <section className="Nav__places">
           <header className="mb10">Lugares Visitados</header>
-          <PlaceOption />
+          <main>
+            {user?.username !== '' ? (
+              <>
+                {user?.userPlaces.length || [].length > 0 ? (
+                  user?.userPlaces.map((place) => (
+                    <PlaceOption name={place.placeName} key={place.placeName} />
+                  ))
+                ) : (
+                  <h3>No hay ubicaciones para mostrar</h3>
+                )}
+              </>
+            ) : (
+              <h3>No ha iniciado sesión</h3>
+            )}
+          </main>
         </section>
       </div>
     </div>

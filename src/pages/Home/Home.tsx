@@ -1,3 +1,4 @@
+// eslint-disable-next-line object-curly-newline
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
@@ -18,23 +19,21 @@ import { getCelcius } from '../../utils';
 import EButton from '../../components/eButton/eButton';
 
 const Home: React.FC = () => {
-  const { darkMode, setCoords } = useContext(appContext);
-  const [loading, setLoading] = useState(false);
+  const {
+    darkMode,
+    setCoords,
+    weather,
+    setWeather: setCurrentWeather,
+    appStatus,
+    setAppStatus,
+  } = useContext(appContext);
   const [grant, setGrant] = useState(false);
-  const [error] = useState({ ok: true });
-  const [state, setState] = useState({
-    weather: 0,
-    icon: '10d@2x',
-    place: '',
-    tempMin: 0,
-    tempMax: 0,
-  });
 
   const getLocalWeather = (): Promise<weatherResponse> =>
     new Promise((resolve, reject) => {
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(({ coords }) => {
-          setLoading(true);
+          setAppStatus((prevStatus: any) => ({ ...prevStatus, loading: true }));
           setGrant(true);
           Weather.getCurrentWeather(coords.latitude, coords.longitude)
             .then((weater) => {
@@ -54,19 +53,19 @@ const Home: React.FC = () => {
     });
 
   function setWeather(properties: any) {
-    setState((prevState) => ({ ...prevState, ...properties }));
+    setCurrentWeather((prevState: any) => ({ ...prevState, ...properties }));
   }
 
   const clickToSearch = () => {
     getLocalWeather().then(({ name, main }) => {
-      setState((prevState) => ({
+      setCurrentWeather((prevState: any) => ({
         ...prevState,
         weather: getCelcius(main.temp),
         place: name,
         tempMin: getCelcius(main.temp_min),
         tempMax: getCelcius(main.temp_max),
       }));
-      setLoading(false);
+      setAppStatus((prevStatus: any) => ({ ...prevStatus, loading: false }));
     });
   };
 
@@ -76,16 +75,19 @@ const Home: React.FC = () => {
       .then(({ state: status }) => {
         if (status === 'granted') {
           setGrant(true);
-          setLoading(true);
+          setAppStatus((prevStatus: any) => ({ ...prevStatus, loading: true }));
           getLocalWeather().then(({ name, main }) => {
-            setState((prevState) => ({
+            setCurrentWeather((prevState: any) => ({
               ...prevState,
               weather: getCelcius(main.temp),
               place: name,
               tempMin: getCelcius(main.temp_min),
               tempMax: getCelcius(main.temp_max),
             }));
-            setLoading(false);
+            setAppStatus((prevStatus: any) => ({
+              ...prevStatus,
+              loading: false,
+            }));
           });
         }
       });
@@ -111,7 +113,15 @@ const Home: React.FC = () => {
       <div className="wrapper">
         <ESearch
           setWeather={setWeather}
-          setLoading={setLoading}
+          setLoading={(status: boolean) => {
+            setAppStatus((prevStatus: any) => ({
+              ...prevStatus,
+              loading: status,
+            }));
+          }}
+          setError={(err: { ok: boolean }) => {
+            setAppStatus((prevStatus: any) => ({ ...prevStatus, err }));
+          }}
           setGrant={setGrant}
         />
         <main className="Home__main">
@@ -126,9 +136,9 @@ const Home: React.FC = () => {
                 handleClick={clickToSearch}
               />
             </div>
-          ) : loading ? (
+          ) : appStatus.loading ? (
             <Loader darkmode={darkMode} />
-          ) : !error.ok ? (
+          ) : !appStatus?.error.ok ? (
             <>
               <Error />
               <figure className="Home__cover">
@@ -138,12 +148,12 @@ const Home: React.FC = () => {
           ) : (
             <>
               <ECard
-                temperature={state.weather}
-                place={state.place}
-                icon={state.icon}
+                temperature={weather.weather}
+                place={weather.place}
+                icon={weather.icon}
                 darkmode={!!darkMode}
-                tempMin={state.tempMin}
-                tempMax={state.tempMax}
+                tempMin={weather.tempMin}
+                tempMax={weather.tempMax}
               />
               <EBottomResults />
             </>

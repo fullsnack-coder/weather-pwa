@@ -3,31 +3,32 @@ import axios, { AxiosInstance } from 'axios';
 import keys from '../utils/config';
 
 const geoLocationInstance: AxiosInstance = axios.create({
-  baseURL: 'https://devru-latitude-longitude-find-v1.p.rapidapi.com/latlon.php',
+  baseURL: 'https://api.opencagedata.com/geocode/v1/json',
   responseType: 'json',
-  headers: {
-    'x-rapidapi-key': keys.apiKeys.rapidApiKey,
-  },
 });
 
 export const getGeoLocation = async (arg = '') => {
   try {
     const req = await geoLocationInstance.get('', {
       params: {
-        location: arg,
+        q: arg,
+        key: keys.apiKeys.openCage,
       },
     });
-    if (req.data.Results.length === 0) {
+    if (req.status === 400) {
+      return { status: false, message: 'Busqueda fallida' };
+    }
+    if (req.data.results.length === 0) {
       return { status: false, message: 'No existen resultados' };
     }
-    const place = await req.data.Results[0];
+    const place = await req.data.results[0];
     return {
       status: true,
-      direction: place.name,
-      latitude: place.lat,
-      longitude: place.lon,
+      direction: place.components.city,
+      latitude: place.geometry.lat,
+      longitude: place.geometry.lng,
     };
   } catch (err) {
-    throw new Error(err);
+    return { status: false, err };
   }
 };

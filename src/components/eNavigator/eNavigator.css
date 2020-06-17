@@ -39,6 +39,7 @@
   border-radius: 50%;
   overflow: hidden;
   background-color: var(--bgLightApp);
+  border: solid 2px var(--bgDarkButton);
 }
 
 .User__picture img {
@@ -91,4 +92,5 @@
   border-radius: 8px;
   padding: 0.8rem;
   color: var(--lightText);
+  margin: 4px;
 }
