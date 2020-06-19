@@ -2,7 +2,7 @@
 
 Aplicación web progresiva hecha en React con tecnologías como Typescript, MongoDB, Context Api, Node.js, Heroku, etc.
 Se puede ver la primera versión aquí 🍦[https://aweather.netlify.app/](https://aweather.netlify.app/) (Se recomienda verlo desde un dispositivo móvil).
-La gestión de este proyecto fue hecha en Trello, puedes verla desde [aquí](<[https://trello.com/b/OYtsQcDA/weather-app](https://trello.com/b/OYtsQcDA/weather-app)>)
+La gestión de este proyecto fue hecha en Trello, puedes verla desde [aquí](https://trello.com/b/OYtsQcDA/weather-app)
 
 ## Descripción de la PWA:
 
