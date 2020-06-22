@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import Input from './Input';
 import EButton from '../../eButton/eButton';
 import { registerUser } from '../../../services/userAccount';
-import { appContext } from '../../../context/app';
+import useUser from '../../../hooks/useUser';
 
 type formValues = {
   username: string;
@@ -18,7 +18,7 @@ type Props = {
 
 const FormRegister: React.FC<Props> = ({ toLogin }) => {
   const [errorAccount, setErrorAccount] = useState({ message: '' });
-  const { setUser } = useContext(appContext);
+  const { setUser } = useUser();
   const history = useHistory();
 
   function validate(values: formValues) {

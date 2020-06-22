@@ -7,9 +7,11 @@ import './eNavigator.css';
 import { appContext } from '../../context/app';
 import PlaceOption from './_children/PlaceOption';
 import EButton from '../eButton/eButton';
+import useUser from '../../hooks/useUser';
 
 const ENavigator: React.FC = () => {
-  const { darkMode, toggleNavbar, user } = useContext(appContext);
+  const { darkMode, toggleNavbar } = useContext(appContext);
+  const user = useUser();
   const classes = classNames('Navigator', {
     darkMode: !!darkMode,
   });
@@ -66,7 +68,7 @@ const ENavigator: React.FC = () => {
             {user?.username !== '' ? (
               <>
                 {user?.userPlaces.length || [].length > 0 ? (
-                  user?.userPlaces.map((place) => (
+                  user?.userPlaces.map((place: any) => (
                     <PlaceOption name={place.placeName} key={place.placeName} />
                   ))
                 ) : (

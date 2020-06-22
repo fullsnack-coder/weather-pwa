@@ -1,18 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Input from './Input';
 import EButton from '../../eButton/eButton';
 import { editUser } from '../../../services/userAccount';
-import { appContext } from '../../../context/app';
+import useUser from '../../../hooks/useUser';
 
 type formValues = {
   userDescription: string;
 };
 
 const FormEdit: React.FC = () => {
-  const { user, setUser } = useContext(appContext);
+  const user = useUser();
+  const { setUser } = useUser();
   const history = useHistory();
 
   function validate(values: formValues) {

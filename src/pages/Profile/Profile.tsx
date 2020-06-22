@@ -12,9 +12,12 @@ import EHeader from '../../components/eHeader/eHeader';
 import EForm from '../../components/eForm/eForm';
 import { appContext } from '../../context/app';
 import config from '../../utils/config';
+import useUser from '../../hooks/useUser';
 
 const Profile: React.FC = () => {
-  const { darkMode, user, setUser } = useContext(appContext);
+  const { darkMode } = useContext(appContext);
+  const { setUser } = useUser();
+  const user = useUser();
   const username: string | undefined = user?.username;
   const [newUser, setNewUser] = useState(false);
   const [supportImage, setImage] = useState<any>('/assets/person.svg');

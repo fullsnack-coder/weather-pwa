@@ -7,14 +7,7 @@ import { AppContextProvider } from './context/app';
 import ENavigator from './components/eNavigator/eNavigator';
 import Profile from './pages/Profile/Profile';
 import { kick } from './services/userAccount';
-
-type User = {
-  uuid?: string;
-  username: string;
-  userImage: string;
-  userPlaces: { placeName: string; uuid: string }[];
-  userDescription: string;
-};
+import { UserProvider } from './context/userContext';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -30,14 +23,6 @@ function App() {
     place: '',
     tempMin: 0,
     tempMax: 0,
-  });
-
-  const [user, setUser] = useState<User>({
-    username: '',
-    userImage: '',
-    uuid: '',
-    userPlaces: [],
-    userDescription: '',
   });
 
   useEffect(() => {
@@ -61,26 +46,26 @@ function App() {
         toggleNavbar,
         coords,
         setCoords,
-        user,
-        setUser,
         weather,
         setWeather,
         appStatus,
         setAppStatus,
       }}
     >
-      <Router>
-        <motion.div
-          className={darkMode ? 'App__container darkMode' : 'App__container'}
-          animate={{ x: activeNavbar ? '-75%' : '0%' }}
-        >
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/profile" component={Profile} />
-          </Switch>
-          <ENavigator />
-        </motion.div>
-      </Router>
+      <UserProvider>
+        <Router>
+          <motion.div
+            className={darkMode ? 'App__container darkMode' : 'App__container'}
+            animate={{ x: activeNavbar ? '-75%' : '0%' }}
+          >
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/profile" component={Profile} />
+            </Switch>
+            <ENavigator />
+          </motion.div>
+        </Router>
+      </UserProvider>
     </AppContextProvider>
   );
 }

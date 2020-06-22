@@ -1,17 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React, { SetStateAction, Dispatch } from 'react';
-
-type Place = {
-  placeName: string;
-  uuid: string;
-};
-
-type User = {
-  uuid?: string;
-  username: string;
-  userImage: string;
-  userPlaces: Place[];
-  userDescription: string;
-};
 
 type Weather = {
   weather: number;
@@ -23,7 +11,6 @@ type Weather = {
 
 interface AppContextInterface {
   darkMode?: boolean;
-  user?: User;
   coords: {
     lat: number;
     lng: number;
@@ -32,7 +19,6 @@ interface AppContextInterface {
   activeNavbar?: boolean;
   toggleNavbar?: any;
   setCoords: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
-  setUser?: any;
   weather: Weather;
   setWeather: Dispatch<SetStateAction<Weather>>;
   appStatus: {
