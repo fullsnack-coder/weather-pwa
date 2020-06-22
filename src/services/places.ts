@@ -36,7 +36,7 @@ export const savePlace = async (placeName: string, userId: string) => {
 export const removePlace = async (placeName: string, userId: string) => {
   try {
     const req = await axios.put(
-      `${config.server.serverUri}/user/place`,
+      `${config.server.serverUri}/api/place`,
       {
         placeName,
       },

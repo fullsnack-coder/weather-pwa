@@ -1,11 +1,11 @@
 /* eslint-disable object-curly-newline */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import EButton from '../../eButton/eButton';
 import Input from './Input';
 import { loginUser } from '../../../services/userAccount';
-import { appContext } from '../../../context/app';
+import useUser from '../../../hooks/useUser';
 
 type formValues = {
   username: string;
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function FormLogin({ toRegister }: Props) {
-  const { setUser } = useContext(appContext);
+  const { setUser } = useUser();
   const [errorAccount, setErrorAccount] = useState({ message: '' });
   const history = useHistory();
 
