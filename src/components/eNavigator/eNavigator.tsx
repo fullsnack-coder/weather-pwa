@@ -115,4 +115,4 @@ const ENavigator: React.FC = () => {
   );
 };
 
-export default ENavigator;
+export default React.memo(ENavigator);

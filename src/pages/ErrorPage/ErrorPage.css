@@ -1,0 +1,13 @@
+.ErrorPage {
+  background-color: var(--bgLightApp);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 100vw;
+}
+
+.ErrorPage.darkmode {
+  background-color: var(--bgDarkApp);
+  color: var(--bgLightApp);
+}
