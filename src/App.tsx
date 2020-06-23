@@ -8,6 +8,7 @@ import Profile from './pages/Profile/Profile';
 import { kick } from './services/userAccount';
 import { UserProvider } from './context/userContext';
 import AppContainer from './utils/hocs/AppContainer';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   useEffect(() => {
@@ -21,7 +22,8 @@ function App() {
           <AppContainer>
             <Switch>
               <Route path="/" exact component={Home} />
-              <Route path="/profile" component={Profile} />
+              <Route path="/profile" exact component={Profile} />
+              <Route component={ErrorPage} />
             </Switch>
             <ENavigator />
           </AppContainer>

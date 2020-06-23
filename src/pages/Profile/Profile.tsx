@@ -39,7 +39,7 @@ const Profile: React.FC = () => {
     if (user?.userImage !== '') {
       setImage(user?.userImage);
     }
-  }, [user]);
+  }, [user.userImage]);
 
   async function updateUserImage(e: any) {
     e.preventDefault();
