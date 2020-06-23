@@ -48,6 +48,7 @@ const FormEdit: React.FC = () => {
           Swal.fire({
             text: 'Se actualizó su información correctamente',
             icon: 'success',
+            toast: true,
           });
           history.push('/');
         } else if (!resp.data.ok) {
