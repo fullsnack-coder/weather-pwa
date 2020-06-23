@@ -68,6 +68,11 @@ button {
   font-size: 1.1rem;
 }
 
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 .App__container {
   display: flex;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)

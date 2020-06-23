@@ -130,4 +130,4 @@ const ECard: React.FC<Props> = ({
   );
 };
 
-export default ECard;
+export default React.memo(ECard);
