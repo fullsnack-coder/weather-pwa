@@ -27,4 +27,4 @@ const EHeader: React.FC = () => {
   );
 };
 
-export default EHeader;
+export default React.memo(EHeader);
