@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable operator-linebreak */
 // eslint-disable-next-line object-curly-newline
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { FaPenAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -12,14 +12,18 @@ import EHeader from '../../components/eHeader/eHeader';
 import EForm from '../../components/eForm/eForm';
 import { appContext } from '../../context/app';
 import config from '../../utils/config';
+import useUser from '../../hooks/useUser';
 
 const Profile: React.FC = () => {
-  const { darkMode, user, setUser } = useContext(appContext);
+  const { darkMode } = useContext(appContext);
+  const { setUser } = useUser();
+  const user = useUser();
   const username: string | undefined = user?.username;
   const [newUser, setNewUser] = useState(false);
   const [supportImage, setImage] = useState<any>('/assets/person.svg');
   const el = document.createElement('form');
   const formRef = useRef<HTMLFormElement>(el);
+  const currentUser = useMemo(() => user, [user]);
 
   function handleChange(e: any) {
     e.preventDefault();
@@ -33,10 +37,11 @@ const Profile: React.FC = () => {
   }
 
   useEffect(() => {
-    if (user?.userImage !== '') {
-      setImage(user?.userImage);
+    if (currentUser?.userImage !== '') {
+      setImage(currentUser?.userImage);
     }
-  }, [user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser.userImage]);
 
   async function updateUserImage(e: any) {
     e.preventDefault();

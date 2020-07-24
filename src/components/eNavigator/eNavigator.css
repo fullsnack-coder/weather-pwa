@@ -5,6 +5,8 @@
   transition: transform ease-out 0.2s;
   width: 75.6%;
   flex-shrink: 0;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 .Navigator.darkMode {
@@ -17,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.3em 2rem;
+  padding: 4.8em 2rem 2rem 2rem;
 }
 
 .User__info {

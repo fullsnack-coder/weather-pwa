@@ -94,4 +94,4 @@ const ESearch: React.FC<Props> = ({
   );
 };
 
-export default ESearch;
+export default React.memo(ESearch);

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './eCard.css';
 import { FaThermometerEmpty, FaThermometerFull } from 'react-icons/fa';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useHistory } from 'react-router-dom';
 import { parseDate } from '../../utils';
 import * as Places from '../../services/places';
-import { appContext } from '../../context/app';
+import useUser from '../../hooks/useUser';
 
 type Props = {
   temperature: number;
@@ -28,7 +28,7 @@ const ECard: React.FC<Props> = ({
 }) => {
   const date = Intl.DateTimeFormat().format(Date.now());
   const stringDate = parseDate(date);
-  const { user } = useContext(appContext);
+  const { setUser, ...user } = useUser();
   const [isFav, setIsFav] = useState(false);
   const history = useHistory();
 
@@ -41,10 +41,31 @@ const ECard: React.FC<Props> = ({
       if (!isFav) {
         Places.savePlace(`${place}`, user.uuid).then((res) => {
           setIsFav(res.ok);
+          if (res.ok) {
+            const currentPlaces = user.userPlaces;
+            setUser((prevUser: any) => ({
+              ...prevUser,
+              userPlaces: [
+                ...currentPlaces,
+                {
+                  placeName: place,
+                },
+              ],
+            }));
+          }
         });
       } else {
         Places.removePlace(`${place}`, user.uuid).then((res) => {
           setIsFav(!res.ok);
+          if (res.ok) {
+            const currentPlaces = user.userPlaces;
+            setUser((prevState: any) => ({
+              ...prevState,
+              userPlaces: currentPlaces.filter(
+                (item) => item.placeName !== place,
+              ),
+            }));
+          }
         });
       }
     } else {
@@ -109,4 +130,4 @@ const ECard: React.FC<Props> = ({
   );
 };
 
-export default ECard;
+export default React.memo(ECard);
