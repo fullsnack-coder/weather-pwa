@@ -106,7 +106,7 @@ const FormRegister: React.FC<Props> = ({ toLogin }) => {
           invalid={!!errors.email && touched.email}
         />
         <Input
-          type="text"
+          type="password"
           placeholder="Ingrese su contraseña"
           label="Contraseña"
           name="password"
