@@ -87,7 +87,7 @@ export default function FormLogin({ toRegister }: Props) {
           invalid={!!errors.username && touched.username}
         />
         <Input
-          type="text"
+          type="password"
           placeholder="Ingrese su contraseña"
           label="Contraseña"
           name="password"
